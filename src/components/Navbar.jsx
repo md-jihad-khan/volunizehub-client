@@ -54,7 +54,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="bg-base-100 font-poppins fixed w-full">
+    <div className="bg-base-100 py-2 font-poppins fixed w-full ">
       <div className="mx-auto lg:container ">
         <div className="navbar font-poppins">
           <div className="navbar-start ">
@@ -101,7 +101,7 @@ const Navbar = () => {
           <div className="navbar-end md:mr-10 mr-3 ">
             {user ? (
               <>
-                <div className="flex items-center  gap-4">
+                <div className="flex items-center gap-4">
                   <div
                     className="tooltip hover:tooltip-open tooltip-left "
                     data-tip={user.displayName}
@@ -110,11 +110,12 @@ const Navbar = () => {
                       <div
                         tabIndex={0}
                         role="button"
-                        className="btn btn-ghost btn-circle avatar"
+                        className=" border-gray-200 border rounded-full avatar w-16"
                       >
-                        <div className="w-10 rounded-full">
+                        <div className="w-48 rounded-full">
                           <img
                             alt="Tailwind CSS Navbar component"
+                            className="w-full"
                             src={user.photoURL}
                           />
                         </div>

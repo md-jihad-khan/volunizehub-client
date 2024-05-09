@@ -4,7 +4,9 @@ import Navbar from "./components/Navbar";
 function App() {
   return (
     <>
-      <Navbar />
+      <div className="h-24 relative z-20 w-full">
+        <Navbar></Navbar>
+      </div>
       <Outlet />
     </>
   );
