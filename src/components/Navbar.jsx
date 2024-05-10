@@ -4,9 +4,8 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useState("light");
   const { user, logOut } = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const handleThemeChange = (e) => {
@@ -90,9 +89,9 @@ const Navbar = () => {
               to={"/"}
               className=" text-lg md:text-3xl font-semi-bold gradient-text font-rancho justify-center flex flex-col items-center"
             >
-              <Link to={"/"} className="font-poppins font-bold">
+              <p className="font-poppins font-bold">
                 <span className="text-pink-500">Volunize </span> Hub
-              </Link>
+              </p>
             </Link>
           </div>
           <div className="navbar-center hidden lg:flex">
@@ -140,7 +139,7 @@ const Navbar = () => {
                     className="btn rounded-3xl px-5 border-none bg-pink-500 text-white"
                     onClick={handleLogout}
                   >
-                    LogOut
+                    Log out
                   </button>
                 </div>
               </>

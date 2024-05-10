@@ -11,14 +11,14 @@ import { AuthContext } from "../providers/AuthProvider";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import loginAnimation from "../assets/login.json";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { signIn, googleLogin, githubLogin, reload, setReload } =
-    useContext(AuthContext);
+  const { signIn, googleLogin, reload, setReload } = useContext(AuthContext);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -68,6 +68,9 @@ const Login = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Volunize Hub | Login</title>
+      </Helmet>
       <div className="md:w-10/12 mx-auto mb-10 ">
         <div className="text-center " data-aos="fade-down">
           <h1 className="text-2xl md:text-4xl font-bold mb-1">Login</h1>

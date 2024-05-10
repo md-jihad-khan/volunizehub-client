@@ -7,6 +7,8 @@ import Home from "./pages/Home.jsx";
 import AuthProvider from "./providers/AuthProvider.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import { HelmetProvider } from "react-helmet-async";
+import AddVolunteerPost from "./pages/AddVolunteerPost.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,14 +26,20 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
+      {
+        path: "/addVolunteerPost",
+        element: <AddVolunteerPost />,
+      },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router}></RouterProvider>
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </AuthProvider>
+    </HelmetProvider>
   </React.StrictMode>
 );

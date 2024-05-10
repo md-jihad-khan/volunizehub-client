@@ -11,6 +11,7 @@ import { AuthContext } from "../providers/AuthProvider";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import loginAnimation from "../assets/login.json";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -92,6 +93,9 @@ const Register = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Volunize Hub | Register</title>
+      </Helmet>
       <div className="md:w-10/12 mx-auto mb-10 ">
         <div className="text-center " data-aos="fade-down">
           <h1 className="text-2xl md:text-4xl font-bold mb-1">Register</h1>
