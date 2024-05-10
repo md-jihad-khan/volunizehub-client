@@ -112,11 +112,7 @@ const Navbar = () => {
                         className=" border-gray-200 border rounded-full avatar w-16"
                       >
                         <div className="w-48 rounded-full">
-                          <img
-                            alt="Tailwind CSS Navbar component"
-                            className="w-full"
-                            src={user.photoURL}
-                          />
+                          <img className="w-full" src={user.photoURL} />
                         </div>
                       </div>
                       <ul

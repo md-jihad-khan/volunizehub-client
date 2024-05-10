@@ -4,16 +4,16 @@ import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProvider";
 import { ScrollRestoration } from "react-router-dom";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AddVolunteerPost = () => {
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
 
   const handleAddPost = (e) => {
     e.preventDefault();
-
     const form = e.target;
-
     const title = form.title.value;
     const category = form.category.value;
     const location = form.location.value;
@@ -35,26 +35,39 @@ const AddVolunteerPost = () => {
     };
     console.log(post);
 
-    fetch(`${import.meta.env.VITE_SERVER}/post`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
-          Swal.fire({
-            icon: "success",
-            title: "Success",
-            text: "Craft Added Successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-        form.reset();
-      });
+    // fetch(`${import.meta.env.VITE_SERVER}/post`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(post),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.insertedId) {
+    //       Swal.fire({
+    //         icon: "success",
+    //         title: "Success",
+    //         text: "Craft Added Successfully",
+    //         showConfirmButton: false,
+    //         timer: 1500,
+    //       });
+    //     }
+    //     form.reset();
+    //   });
+
+    axiosSecure.post(`/post?email=${user?.email}`, post).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Post Added Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      form.reset();
+    });
   };
   return (
     <div>
