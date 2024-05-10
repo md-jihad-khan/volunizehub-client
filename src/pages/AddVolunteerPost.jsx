@@ -9,9 +9,11 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 const AddVolunteerPost = () => {
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
 
   const handleAddPost = (e) => {
+    setLoading(true);
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
@@ -35,42 +37,38 @@ const AddVolunteerPost = () => {
     };
     console.log(post);
 
-    // fetch(`${import.meta.env.VITE_SERVER}/post`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(post),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data.insertedId) {
-    //       Swal.fire({
-    //         icon: "success",
-    //         title: "Success",
-    //         text: "Craft Added Successfully",
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    //     }
-    //     form.reset();
-    //   });
-
-    axiosSecure.post(`/post?email=${user?.email}`, post).then((res) => {
-      if (res.data.insertedId) {
+    axiosSecure
+      .post(`/post?email=${user?.email}`, post)
+      .then((res) => {
+        setLoading(false);
+        if (res.data.insertedId) {
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Post Added Successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        form.reset();
+      })
+      .catch((error) => {
+        console.error("An error occurred:", error);
         Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Post Added Successfully",
-          showConfirmButton: false,
-          timer: 1500,
+          icon: "error",
+          title: "Oops...",
+          text: "An error occurred while adding the post. Please try again later.",
         });
-      }
-      form.reset();
-    });
+        setLoading(false);
+      });
   };
   return (
-    <div>
+    <div className="relative">
+      <div
+        className={`${loading ? "absolute" : "hidden"} left-[50%] top-[50%]`}
+      >
+        <span className="loading text-pink-500 loading-spinner loading-lg"></span>
+      </div>
       <ScrollRestoration />
       <div className="md:w-4/5 mx-auto p-5">
         <div className="bg-base-200  p-5 rounded-lg text-center ">
@@ -123,10 +121,10 @@ const AddVolunteerPost = () => {
                   <option value="" disabled>
                     Select Category name
                   </option>
-                  <option>healthcare</option>
-                  <option>education</option>
-                  <option>social service</option>
-                  <option>animal welfare</option>
+                  <option>Healthcare</option>
+                  <option>Education</option>
+                  <option>Social service</option>
+                  <option>Animal welfare</option>
                 </select>
               </div>
               <div className="form-control">
