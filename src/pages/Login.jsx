@@ -118,7 +118,7 @@ const Login = () => {
                     name="password"
                     id="password"
                     placeholder="Password"
-                    className="input w-full text-gray-800 border-pink-500 border "
+                    className="input w-full  border-pink-500  border "
                   />
                 </div>
               </div>

@@ -90,9 +90,9 @@ const Navbar = () => {
               to={"/"}
               className=" text-lg md:text-3xl font-semi-bold gradient-text font-rancho justify-center flex flex-col items-center"
             >
-              <p className="font-poppins font-bold">
+              <Link to={"/"} className="font-poppins font-bold">
                 <span className="text-pink-500">Volunize </span> Hub
-              </p>
+              </Link>
             </Link>
           </div>
           <div className="navbar-center hidden lg:flex">
@@ -137,7 +137,7 @@ const Navbar = () => {
                   </div>
 
                   <button
-                    className="btn bg-pink-500 border-none text-white"
+                    className="btn rounded-3xl px-5 border-none bg-pink-500 text-white"
                     onClick={handleLogout}
                   >
                     LogOut
