@@ -1,6 +1,18 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import PostCard from "./PostCard";
+
 const VolunteerNeedsNow = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_SERVER}/posts`)
+      .then((res) => setPosts(res.data));
+  }, []);
+
   return (
-    <div className=" mt-12">
+    <div className="container mx-auto mt-12">
       <div className="text-center " data-aos="fade-down">
         <h1 className="text-2xl md:text-4xl font-bold mb-1">
           <span className="text-pink-500"> Volunteer</span> Needs Now
@@ -21,7 +33,11 @@ const VolunteerNeedsNow = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {posts.map((post) => (
+          <PostCard key={post._id} post={post} />
+        ))}
+      </div>
     </div>
   );
 };

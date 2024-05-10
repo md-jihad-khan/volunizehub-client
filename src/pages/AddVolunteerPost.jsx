@@ -24,6 +24,7 @@ const AddVolunteerPost = () => {
     const user_Name = user.displayName;
     const photo_url = form.photo.value;
     const description = form.description.value;
+    const deadline = startDate;
 
     const post = {
       title,
@@ -34,6 +35,7 @@ const AddVolunteerPost = () => {
       user_Name,
       photo_url,
       description,
+      deadline,
     };
     console.log(post);
 
