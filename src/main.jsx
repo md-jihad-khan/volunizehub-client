@@ -11,6 +11,7 @@ import { HelmetProvider } from "react-helmet-async";
 import AddVolunteerPost from "./pages/AddVolunteerPost.jsx";
 import Privateroute from "./components/PrivateRoute.jsx";
 import PostDetails from "./pages/PostDetails.jsx";
+import ManageMyPost from "./pages/ManageMyPost.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,6 +42,14 @@ const router = createBrowserRouter([
         element: (
           <Privateroute>
             <PostDetails />,
+          </Privateroute>
+        ),
+      },
+      {
+        path: "/manageMyPost",
+        element: (
+          <Privateroute>
+            <ManageMyPost />,
           </Privateroute>
         ),
       },

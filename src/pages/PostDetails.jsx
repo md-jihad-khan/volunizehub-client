@@ -11,7 +11,7 @@ const PostDetails = () => {
 
   useEffect(() => {
     axiosSecure
-      .get(`/post/${params.id}?email=${user?.email}`, post)
+      .get(`/post/${params.id}?email=${user?.email}`)
       .then((res) => {
         setPost(res.data);
       })
@@ -69,21 +69,21 @@ const PostDetails = () => {
             <strong>Organizer name:</strong>
             <span className="text-sm ml-2 text-gray-500">
               {" "}
-              {post.user_Name}
+              {post.organizer_Name}
             </span>
           </p>
           <p>
             <strong>Organizer email:</strong>{" "}
             <span className="text-sm ml-2 text-gray-500">
               {" "}
-              {post.user_Email}
+              {post.organizer_Email}
             </span>
           </p>
 
           <hr className=" border mt-4" />
           <div className="card-actions mt-4 justify-center">
             <button className="btn px-10 cursor-pointer bg-pink-500 text-white">
-              Request
+              Be a Volunteer
             </button>
           </div>
         </div>

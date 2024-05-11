@@ -20,8 +20,8 @@ const AddVolunteerPost = () => {
     const category = form.category.value;
     const location = form.location.value;
     const numberOfVolunteer = form.numberOfVolunteer.value;
-    const user_Email = user.email;
-    const user_Name = user.displayName;
+    const organizer_Email = user.email;
+    const organizer_Name = user.displayName;
     const photo_url = form.photo.value;
     const description = form.description.value;
     const deadline = startDate;
@@ -31,8 +31,8 @@ const AddVolunteerPost = () => {
       category,
       location,
       numberOfVolunteer,
-      user_Email,
-      user_Name,
+      organizer_Email,
+      organizer_Name,
       photo_url,
       description,
       deadline,

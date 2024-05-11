@@ -109,9 +109,9 @@ const Navbar = () => {
                       <div
                         tabIndex={0}
                         role="button"
-                        className=" border-gray-200 border rounded-full avatar w-16"
+                        className=" border-gray-200 border rounded-full avatar w-14 md:w-16"
                       >
-                        <div className="w-48 rounded-full">
+                        <div className="md:w-48 w-36 rounded-full">
                           <img className="w-full" src={user.photoURL} />
                         </div>
                       </div>
@@ -132,7 +132,7 @@ const Navbar = () => {
                   </div>
 
                   <button
-                    className="btn rounded-3xl px-5 border-none bg-pink-500 text-white"
+                    className="btn  rounded-3xl lg:px-5 border-none bg-pink-500 text-white"
                     onClick={handleLogout}
                   >
                     Log out
