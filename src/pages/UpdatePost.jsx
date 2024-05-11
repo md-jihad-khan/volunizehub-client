@@ -1,23 +1,26 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProvider";
-import { ScrollRestoration } from "react-router-dom";
+import { ScrollRestoration, useParams } from "react-router-dom";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
-const AddVolunteerPost = () => {
+const UpdatePost = () => {
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useContext(AuthContext);
+  const [post, setPost] = useState({});
   const [loading, setLoading] = useState(false);
+  const params = useParams();
   const axiosSecure = useAxiosSecure();
+  const [categoryname, setCategoryname] = useState("");
 
   const handleAddPost = (e) => {
     setLoading(true);
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
-    const category = form.category.value;
+    const category = categoryname;
     const location = form.location.value;
     const numberOfVolunteer = form.numberOfVolunteer.value;
     const organizer_Email = user.email;
@@ -37,16 +40,18 @@ const AddVolunteerPost = () => {
       description,
       deadline,
     };
+    console.log(post);
 
     axiosSecure
-      .post(`/post?email=${user?.email}`, post)
+      .put(`/post/${params.id}?email=${user?.email}`, post)
       .then((res) => {
+        console.log(res);
         setLoading(false);
-        if (res.data.insertedId) {
+        if (res.data.modifiedCount > 0) {
           Swal.fire({
             icon: "success",
             title: "Success",
-            text: "Post Added Successfully",
+            text: "Post Updated Successfully",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -63,6 +68,23 @@ const AddVolunteerPost = () => {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    setLoading(true);
+    axiosSecure
+      .get(`/post/${params.id}?email=${user?.email}`)
+      .then((res) => {
+        setPost(res.data);
+        setCategoryname(res.data.category);
+        setStartDate(res.data.deadline);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error("An error occurred:", error);
+      });
+  }, []);
+
   return (
     <div className="relative">
       <div
@@ -74,8 +96,8 @@ const AddVolunteerPost = () => {
       <div className="md:w-4/5 mx-auto p-5">
         <div className="bg-base-200  p-5 rounded-lg text-center ">
           <div className="flex items-center justify-center gap-3 text-2xl md:text-5xl mb-2 mt-3 font-poppins font-bold">
-            <h3 className="text-pink-500">Add </h3>
-            <span className="text-2xl md:text-5xl">Volunteer Post</span>
+            <h3 className="text-pink-500">Update </h3>
+            <span className="text-2xl md:text-5xl"> Post</span>
           </div>
           <div className="inline-flex items-center justify-center w-full">
             <hr className="w-64  my-4 border-pink-500 border rounded "></hr>
@@ -106,6 +128,7 @@ const AddVolunteerPost = () => {
                   placeholder="Enter Title"
                   className="input "
                   required
+                  defaultValue={post.title}
                 />
               </div>
               <div className="form-control">
@@ -118,14 +141,16 @@ const AddVolunteerPost = () => {
                   className="input w-full text-gray-400"
                   name="category"
                   required
+                  value={categoryname}
+                  onChange={(e) => setCategoryname(e.target.value)} // Assuming setPost is a function to update post state
                 >
                   <option value="" disabled>
                     Select Category name
                   </option>
-                  <option>Healthcare</option>
-                  <option>Education</option>
-                  <option>Social service</option>
-                  <option>Animal welfare</option>
+                  <option value="Healthcare">Healthcare</option>
+                  <option value="Education">Education</option>
+                  <option value="Social service">Social service</option>
+                  <option value="Animal welfare">Animal welfare</option>
                 </select>
               </div>
               <div className="form-control">
@@ -140,6 +165,7 @@ const AddVolunteerPost = () => {
                   placeholder="Enter the Location"
                   className="input  "
                   required
+                  defaultValue={post.location}
                 />
               </div>
               <div className="form-control">
@@ -165,6 +191,7 @@ const AddVolunteerPost = () => {
                   name="numberOfVolunteer"
                   placeholder="Enter the No. of volunteers needed"
                   className="input  "
+                  defaultValue={post.numberOfVolunteer}
                   required
                 />
               </div>
@@ -180,6 +207,7 @@ const AddVolunteerPost = () => {
                   name="photo"
                   placeholder="Enter the photo url"
                   className="input  "
+                  defaultValue={post.photo_url}
                   required
                 />
               </div>
@@ -193,13 +221,14 @@ const AddVolunteerPost = () => {
               name="description"
               placeholder="description"
               rows="5"
+              defaultValue={post.description}
               className="input h-full w-full"
             ></textarea>
             <button
               type="submit"
               className="border text-white bg-pink-500 btn mt-4 w-full  text-xl  "
             >
-              Add Post
+              Update Post
             </button>
           </form>
         </div>
@@ -208,4 +237,4 @@ const AddVolunteerPost = () => {
   );
 };
 
-export default AddVolunteerPost;
+export default UpdatePost;

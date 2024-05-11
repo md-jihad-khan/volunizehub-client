@@ -9,21 +9,29 @@ const MyVolunteerNeedposts = () => {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axiosSecure
       .get(`/post/?email=${user?.email}`)
       .then((res) => {
-        console.log(res.data);
         setPosts(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("An error occurred:", error);
+        setLoading(false);
       });
   }, []);
 
   return (
     <div>
+      <div
+        className={`${loading ? "absolute" : "hidden"} left-[50%] top-[50%]`}
+      >
+        <span className="loading text-pink-500 loading-spinner loading-lg"></span>
+      </div>
       <div className="overflow-x-auto">
         <table className="table table-sm">
           <thead>
@@ -53,10 +61,13 @@ const MyVolunteerNeedposts = () => {
                   </Link>
                 </td>
                 <td className="">
-                  <button className="btn btn-ghost btn-xs px-0 ">
+                  <Link
+                    to={`/updatePost/${post._id}`}
+                    className="btn btn-ghost btn-xs px-0 "
+                  >
                     Update
                     <FaPen />
-                  </button>
+                  </Link>
                 </td>
                 <td>
                   <button className="btn px-0 btn-ghost btn-xs">
