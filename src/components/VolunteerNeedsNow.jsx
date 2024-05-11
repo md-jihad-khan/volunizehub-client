@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import PostCard from "./PostCard";
+import { Link } from "react-router-dom";
 
 const VolunteerNeedsNow = () => {
   const [posts, setPosts] = useState([]);
@@ -37,6 +38,14 @@ const VolunteerNeedsNow = () => {
         {posts.map((post) => (
           <PostCard key={post._id} post={post} />
         ))}
+      </div>
+      <div className="card-actions mt-14 justify-center">
+        <Link
+          to={`/craft/`}
+          className="btn px-10 cursor-pointer bg-pink-500 text-white"
+        >
+          See All
+        </Link>
       </div>
     </div>
   );
