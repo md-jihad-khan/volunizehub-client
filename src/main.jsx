@@ -13,6 +13,7 @@ import Privateroute from "./components/PrivateRoute.jsx";
 import PostDetails from "./pages/PostDetails.jsx";
 import ManageMyPost from "./pages/ManageMyPost.jsx";
 import UpdatePost from "./pages/UpdatePost.jsx";
+import NeedVolunteer from "./pages/NeedVolunteer.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
             <UpdatePost />,
           </Privateroute>
         ),
+      },
+      {
+        path: "/needVolunteer",
+        element: <NeedVolunteer />,
       },
     ],
   },

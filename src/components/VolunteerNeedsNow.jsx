@@ -5,15 +5,18 @@ import { Link } from "react-router-dom";
 
 const VolunteerNeedsNow = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_SERVER}/posts`)
-      .then((res) => setPosts(res.data));
+    setLoading(true);
+    axios.get(`${import.meta.env.VITE_SERVER}/posts`).then((res) => {
+      setPosts(res.data);
+      setLoading(false);
+    });
   }, []);
 
   return (
-    <div className="container mx-auto mt-12">
+    <div className="container mx-auto mt-12 ">
       <div className="text-center " data-aos="fade-down">
         <h1 className="text-2xl md:text-4xl font-bold mb-1">
           <span className="text-pink-500"> Volunteer</span> Needs Now
@@ -33,15 +36,24 @@ const VolunteerNeedsNow = () => {
           </div>
         </div>
       </div>
+      <div className="relative">
+        <div
+          className={`${
+            loading ? "absolute" : "hidden"
+          } left-[50%] top-[50%] z-10`}
+        >
+          <span className="loading text-pink-500 loading-spinner loading-lg"></span>
+        </div>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
         {posts.map((post) => (
           <PostCard key={post._id} post={post} />
         ))}
       </div>
       <div className="card-actions mt-14 justify-center">
         <Link
-          to={`/craft/`}
+          to={`/needVolunteer`}
           className="btn px-10 cursor-pointer bg-pink-500 text-white"
         >
           See All
