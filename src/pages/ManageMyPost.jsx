@@ -4,7 +4,7 @@ import MyVolunteerNeedposts from "../components/MyVolunteerNeedposts";
 
 const ManageMyPost = () => {
   return (
-    <div className="container mx-auto text-center ">
+    <div className="container mx-auto text-center min-h-96">
       <div className="text-center " data-aos="fade-down">
         <h1 className="text-2xl md:text-4xl font-bold mb-1">
           <span className="text-pink-500">Manage</span> My Post

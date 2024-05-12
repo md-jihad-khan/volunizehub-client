@@ -64,11 +64,11 @@ const NeedVolunteer = () => {
         </label>
       </form>
       <div
-        className={`${loading ? "absolute" : "hidden"} left-[50%] top-[50%]`}
+        className={`${loading ? "absolute" : "hidden"} left-[50%] top-[50%] `}
       >
         <span className="loading text-pink-500 loading-spinner loading-lg"></span>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-5 min-h-screen">
         {posts.map((post) => (
           <PostCard key={post._id} post={post} />
         ))}
