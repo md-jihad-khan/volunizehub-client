@@ -14,10 +14,12 @@ import PostDetails from "./pages/PostDetails.jsx";
 import ManageMyPost from "./pages/ManageMyPost.jsx";
 import UpdatePost from "./pages/UpdatePost.jsx";
 import NeedVolunteer from "./pages/NeedVolunteer.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
