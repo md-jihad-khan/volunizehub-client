@@ -1,4 +1,4 @@
-import { ScrollRestoration, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
@@ -6,16 +6,20 @@ import { AuthContext } from "../providers/AuthProvider";
 const PostDetails = () => {
   const { user } = useContext(AuthContext);
   const [post, setPost] = useState({});
+  const [loading, setLoading] = useState(false);
   const params = useParams();
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
+    setLoading(true);
     axiosSecure
       .get(`/post/${params.id}?email=${user?.email}`)
       .then((res) => {
+        setLoading(false);
         setPost(res.data);
       })
       .catch((error) => {
+        setLoading(false);
         console.error("An error occurred:", error);
       });
   }, []);
@@ -29,9 +33,12 @@ const PostDetails = () => {
 
   return (
     <div className="container mx-auto font-poppins">
-      {" "}
+      <div
+        className={`${loading ? "absolute" : "hidden"} left-[50%] top-[50%]`}
+      >
+        <span className="loading text-pink-500 loading-spinner loading-lg"></span>
+      </div>
       <div className="hero-content flex-col gap-10 lg:flex-row min-h-[80vh] ">
-        <ScrollRestoration />
         <div className=" bg-[#1313130D] rounded-lg w-full lg:w-1/2 ">
           <img
             src={post.photo_url}
@@ -82,9 +89,12 @@ const PostDetails = () => {
 
           <hr className=" border mt-4" />
           <div className="card-actions mt-4 justify-center">
-            <button className="btn px-10 cursor-pointer bg-pink-500 text-white">
+            <Link
+              to={`/beAVolunteer/${post?._id}`}
+              className="btn px-10 cursor-pointer bg-pink-500 text-white"
+            >
               Be a Volunteer
-            </button>
+            </Link>
           </div>
         </div>
       </div>

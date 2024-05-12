@@ -15,6 +15,7 @@ import ManageMyPost from "./pages/ManageMyPost.jsx";
 import UpdatePost from "./pages/UpdatePost.jsx";
 import NeedVolunteer from "./pages/NeedVolunteer.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
+import BeaVolunteerPage from "./pages/BeaVolunteerPage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +47,14 @@ const router = createBrowserRouter([
         element: (
           <Privateroute>
             <PostDetails />,
+          </Privateroute>
+        ),
+      },
+      {
+        path: "/beAVolunteer/:id",
+        element: (
+          <Privateroute>
+            <BeaVolunteerPage />,
           </Privateroute>
         ),
       },

@@ -22,7 +22,7 @@ const UpdatePost = () => {
     const title = form.title.value;
     const category = categoryname;
     const location = form.location.value;
-    const numberOfVolunteer = form.numberOfVolunteer.value;
+    const numberOfVolunteer = parseInt(form.numberOfVolunteer.value);
     const organizer_Email = user.email;
     const organizer_Name = user.displayName;
     const photo_url = form.photo.value;
@@ -93,6 +93,8 @@ const UpdatePost = () => {
         <span className="loading text-pink-500 loading-spinner loading-lg"></span>
       </div>
       <ScrollRestoration />
+
+      {}
       <div className="md:w-4/5 mx-auto p-5">
         <div className="bg-base-200  p-5 rounded-lg text-center ">
           <div className="flex items-center justify-center gap-3 text-2xl md:text-5xl mb-2 mt-3 font-poppins font-bold">
