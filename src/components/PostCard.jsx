@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const PostCard = ({ post }) => {
-  const { _id, category, photo_url, title, deadline } = post;
+  const { _id, category, photo_url, title, deadline, numberOfVolunteer } = post;
   const deadlineDate = new Date(deadline);
 
   // Options for formatting the date
@@ -28,6 +28,12 @@ const PostCard = ({ post }) => {
           <strong>Deadline:</strong>
           <span className="text-sm ml-2 text-gray-500">
             {formattedDeadline}
+          </span>
+        </p>
+        <p>
+          <strong>Number of Volunteer need:</strong>
+          <span className="text-sm ml-2 text-gray-500">
+            {numberOfVolunteer}
           </span>
         </p>
 

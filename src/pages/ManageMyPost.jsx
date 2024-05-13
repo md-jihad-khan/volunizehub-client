@@ -1,6 +1,7 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import MyVolunteerNeedposts from "../components/MyVolunteerNeedposts";
+import MyRequest from "../components/MyRequest";
 
 const ManageMyPost = () => {
   return (
@@ -36,7 +37,7 @@ const ManageMyPost = () => {
           </h2>
         </TabPanel>
         <TabPanel>
-          <h2>Any content 2</h2>
+          <MyRequest />
         </TabPanel>
       </Tabs>
     </div>
