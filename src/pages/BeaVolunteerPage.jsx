@@ -12,9 +12,11 @@ const BeaVolunteerPage = () => {
   const params = useParams();
   const axiosSecure = useAxiosSecure();
   const [reload, setReload] = useState(true);
+  const [suggestion, setSuggestion] = useState("");
 
   const handleRequest = () => {
-    setLoading(true);
+    // setLoading(true);
+
     // if (user.email == post.organizer_Email) {
     //   return Swal.fire({
     //     icon: "error",
@@ -22,14 +24,14 @@ const BeaVolunteerPage = () => {
     //     text: "You Can't be a Volunteer on your post !",
     //   });
     // }
-    if (post.numberOfVolunteer == 0) {
-      setLoading(false);
-      return Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Maximum Number of Volunteer have been requested !",
-      });
-    }
+    // if (post.numberOfVolunteer == 0) {
+    //   setLoading(false);
+    //   return Swal.fire({
+    //     icon: "error",
+    //     title: "Oops...",
+    //     text: "Maximum Number of Volunteer have been requested !",
+    //   });
+    // }
 
     const volunteer_name = user.displayName;
     const volunteer_email = user.email;
@@ -46,40 +48,43 @@ const BeaVolunteerPage = () => {
       organizer_Email,
       post_title,
       post_category,
+      suggestion,
     };
 
-    axiosSecure
-      .post(`/request?email=${user?.email}`, request)
-      .then((res) => {
-        setLoading(false);
-        setReload(!reload);
-        if (res.data == "You have already placed a request on this post") {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "You have already placed a request on this post",
-          });
-        }
-        if (res.data.insertedId) {
-          Swal.fire({
-            icon: "success",
-            title: "Success",
-            text: "Request Added Successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.error("An error occurred:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "An error occurred while adding the Request. Please try again later.",
-        });
-        setLoading(false);
-      });
+    console.log(request);
+
+    // axiosSecure
+    //   .post(`/request?email=${user?.email}`, request)
+    //   .then((res) => {
+    //     setLoading(false);
+    //     setReload(!reload);
+    //     if (res.data == "You have already placed a request on this post") {
+    //       Swal.fire({
+    //         icon: "error",
+    //         title: "Oops...",
+    //         text: "You have already placed a request on this post",
+    //       });
+    //     }
+    //     if (res.data.insertedId) {
+    //       Swal.fire({
+    //         icon: "success",
+    //         title: "Success",
+    //         text: "Request Added Successfully",
+    //         showConfirmButton: false,
+    //         timer: 1500,
+    //       });
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     setLoading(false);
+    //     console.error("An error occurred:", error);
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: "Oops...",
+    //       text: "An error occurred while adding the Request. Please try again later.",
+    //     });
+    //     setLoading(false);
+    //   });
   };
 
   useEffect(() => {
@@ -193,6 +198,15 @@ const BeaVolunteerPage = () => {
                 <p>Volunteer Email: {user.email}</p>
               </div>
 
+              <div>
+                <textarea
+                  onChange={(e) => setSuggestion(e.target.value)}
+                  name="suggestion"
+                  placeholder="Suggestion"
+                  rows="5"
+                  className="p-2 w-full rounded lg outline-none"
+                ></textarea>
+              </div>
               <button
                 onClick={handleRequest}
                 type="button"

@@ -5,7 +5,7 @@ const AboutUs = () => {
         className="container hero mx-auto mt-7 min-h-[70vh] bg-cover bg-fixed rounded-lg bg-center relative "
         style={{
           backgroundImage:
-            "url(https://images.pexels.com/photos/6647026/pexels-photo-6647026.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "url(https://images.pexels.com/photos/5029855/pexels-photo-5029855.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
         }}
       >
         <div className="w-full h-full absolute bg-black opacity-50 rounded-lg z-0"></div>
