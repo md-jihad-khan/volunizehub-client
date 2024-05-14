@@ -1,9 +1,9 @@
 const Opportunities = () => {
   return (
-    <section className="overflow-hidden pt-20 pb-12 lg:pt-[120px] lg:pb-[90px] ">
+    <section className="overflow-hidden  pb-12 lg:mt-[120px] lg:mb-[90px] ">
       <div className="container mx-auto">
         <div className="flex flex-wrap items-center justify-between -mx-4">
-          <div className="w-full px-4 lg:w-6/12" data-aos="fade-right">
+          <div className="w-full px-4 lg:w-6/12">
             <div className="flex items-center -mx-3 sm:-mx-4">
               <div className="w-full px-3 sm:px-4 xl:w-1/2">
                 <div className="py-3 sm:py-4">
@@ -603,7 +603,7 @@ const Opportunities = () => {
             </div>
           </div>
 
-          <div className="w-full px-4 lg:w-1/2 xl:w-5/12" data-aos="fade-left">
+          <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
             <div className="">
               <div className="text-center">
                 <h1 className="text-2xl md:text-4xl font-bold mb-1">

@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import loginAnimation from "../assets/login.json";
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +22,7 @@ const Register = () => {
   const { createUser, updateUserProfile, reload, setReload } =
     useContext(AuthContext);
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const name = e.target.username.value;
     const email = e.target.email.value;
@@ -56,8 +57,15 @@ const Register = () => {
         timer: 1500,
       });
     } else {
-      createUser(email, password)
-        .then(() => {
+      await createUser(email, password)
+        .then((result) => {
+          axios.post(
+            `${import.meta.env.VITE_SERVER}/jwt`,
+            {
+              email: result?.user?.email,
+            },
+            { withCredentials: true }
+          );
           updateUserProfile(name, photoUrl).then(() => {
             Swal.fire({
               icon: "success",
@@ -66,7 +74,7 @@ const Register = () => {
               timer: 1500,
             });
             setReload(!reload);
-            navigate(location?.state ? location.state : "/");
+            navigate("/");
           });
         })
         .catch((error) => {

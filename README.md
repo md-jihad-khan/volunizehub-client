@@ -1,8 +1,11 @@
-# React + Vite
+# Volunize Hub!
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site URL:** [https://volunizehub.web.app](https://volunizehub.web.app)
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Account Management:** Users can create their accounts to post volunteer opportunities or to volunteer for existing opportunities.
+- **Post Volunteer Opportunities:** Organizations or individuals can create posts to request volunteers for their events or causes.
+- **Volunteer Requests:** Volunteers can browse through posted opportunities and request to volunteer for specific events or causes.
+- **Post Management:** Users can update or delete their posts as needed, ensuring the information remains accurate.
+- **Request Cancellation:** Volunteers can cancel their volunteer requests if they are no longer available or interested in a particular opportunity.

@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase";
@@ -32,27 +33,19 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  const logOut = () => {
+  const logOut = async () => {
+    await axios.post(`${import.meta.env.VITE_SERVER}/logout`, {
+      withCredentials: true,
+    });
     setLoading(true);
     return signOut(auth);
   };
+  const updateUserProfile = (displayName, photoURL) => {
+    return updateProfile(auth.currentUser, { displayName, photoURL });
+  };
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      const userEmail = currentUser?.email || user?.email;
-      const loggedUser = { email: userEmail };
       setUser(currentUser);
-      if (currentUser) {
-        axios
-          .post("http://localhost:5000/jwt", loggedUser, {
-            withCredentials: true,
-          })
-          .then((res) => console.log(res.data));
-      } else {
-        axios.post("http://localhost:5000/logout", loggedUser, {
-          withCredentials: true,
-        });
-      }
-
       setLoading(false);
     });
     return () => {
@@ -70,6 +63,7 @@ const AuthProvider = ({ children }) => {
     googleLogin,
     reload,
     setReload,
+    updateUserProfile,
   };
   return (
     <AuthContext.Provider value={authInfo}>

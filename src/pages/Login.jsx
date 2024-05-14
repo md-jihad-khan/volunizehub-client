@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import loginAnimation from "../assets/login.json";
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,20 +21,27 @@ const Login = () => {
 
   const { signIn, googleLogin, reload, setReload } = useContext(AuthContext);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const email = e.target.email.value;
     const password = e.target.password.value;
-    signIn(email, password)
-      .then(() => {
+    await signIn(email, password)
+      .then((result) => {
+        axios.post(
+          `${import.meta.env.VITE_SERVER}/jwt`,
+          {
+            email: result?.user?.email,
+          },
+          { withCredentials: true }
+        );
         Swal.fire({
           icon: "success",
           title: "Login Successful",
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate(location?.state ? location.state : "/");
+        navigate("/");
         return setReload(!reload);
       })
       .catch((error) => {
@@ -49,13 +57,20 @@ const Login = () => {
   const handleGoogleLogin = () => {
     googleLogin()
       .then((result) => {
-        navigate(location?.state ? location.state : "/");
+        axios.post(
+          `${import.meta.env.VITE_SERVER}/jwt`,
+          {
+            email: result?.user?.email,
+          },
+          { withCredentials: true }
+        );
         Swal.fire({
           icon: "success",
           title: "Google Login Successful",
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate("/");
       })
       .catch((error) => {
         Swal.fire({

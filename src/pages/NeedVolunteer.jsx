@@ -51,7 +51,15 @@ const NeedVolunteer = () => {
     console.log(value);
     setCurrentPage(value);
   };
+  const handleDate = (date) => {
+    const deadlineDate = new Date(date);
 
+    // Options for formatting the date
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    // Format the deadline date
+    const formattedDeadline = deadlineDate.toLocaleDateString("en-US", options);
+    return formattedDeadline;
+  };
   return (
     <>
       <Helmet>
@@ -134,9 +142,9 @@ const NeedVolunteer = () => {
                 <th>#</th>
                 <th>Title</th>
                 <th>Category</th>
+                <th>Volunteer Need</th>
+                <th>Deadline</th>
                 <th className="hidden md:block">View Details</th>
-                <th>Update</th>
-                <th>Delete</th>
                 {/* Add more table headers as needed */}
               </tr>
             </thead>
@@ -147,6 +155,15 @@ const NeedVolunteer = () => {
                   <td className="line-clamp-1 h-7 lg:h-full">{post.title}</td>
                   <td>{post.category}</td>
 
+                  <td className="text-left">{post.numberOfVolunteer}</td>
+                  <td className="">
+                    <Link
+                      to={`/updatePost/${post._id}`}
+                      className="btn btn-ghost btn-xs px-0 "
+                    >
+                      {handleDate(post.deadline)}
+                    </Link>
+                  </td>
                   <td className="hidden md:block">
                     <Link
                       to={`/post/${post._id}`}
@@ -154,22 +171,6 @@ const NeedVolunteer = () => {
                     >
                       Details
                     </Link>
-                  </td>
-                  <td className="">
-                    <Link
-                      to={`/updatePost/${post._id}`}
-                      className="btn btn-ghost btn-xs px-0 "
-                    >
-                      Update
-                      <FaPen />
-                    </Link>
-                  </td>
-                  <td>
-                    <button className="btn px-0 btn-ghost btn-xs">
-                      {" "}
-                      Delete
-                      <MdDelete />
-                    </button>
                   </td>
                 </tr>
               ))}

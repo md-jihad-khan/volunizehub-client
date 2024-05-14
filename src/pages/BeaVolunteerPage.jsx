@@ -15,23 +15,24 @@ const BeaVolunteerPage = () => {
   const [suggestion, setSuggestion] = useState("");
 
   const handleRequest = () => {
-    // setLoading(true);
+    setLoading(true);
 
-    // if (user.email == post.organizer_Email) {
-    //   return Swal.fire({
-    //     icon: "error",
-    //     title: "Oops...",
-    //     text: "You Can't be a Volunteer on your post !",
-    //   });
-    // }
-    // if (post.numberOfVolunteer == 0) {
-    //   setLoading(false);
-    //   return Swal.fire({
-    //     icon: "error",
-    //     title: "Oops...",
-    //     text: "Maximum Number of Volunteer have been requested !",
-    //   });
-    // }
+    if (user.email == post.organizer_Email) {
+      setLoading(false);
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You Can't be a Volunteer on your post !",
+      });
+    }
+    if (post.numberOfVolunteer == 0) {
+      setLoading(false);
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Maximum Number of Volunteer have been requested !",
+      });
+    }
 
     const volunteer_name = user.displayName;
     const volunteer_email = user.email;
@@ -53,38 +54,38 @@ const BeaVolunteerPage = () => {
 
     console.log(request);
 
-    // axiosSecure
-    //   .post(`/request?email=${user?.email}`, request)
-    //   .then((res) => {
-    //     setLoading(false);
-    //     setReload(!reload);
-    //     if (res.data == "You have already placed a request on this post") {
-    //       Swal.fire({
-    //         icon: "error",
-    //         title: "Oops...",
-    //         text: "You have already placed a request on this post",
-    //       });
-    //     }
-    //     if (res.data.insertedId) {
-    //       Swal.fire({
-    //         icon: "success",
-    //         title: "Success",
-    //         text: "Request Added Successfully",
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.error("An error occurred:", error);
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Oops...",
-    //       text: "An error occurred while adding the Request. Please try again later.",
-    //     });
-    //     setLoading(false);
-    //   });
+    axiosSecure
+      .post(`/request?email=${user?.email}`, request)
+      .then((res) => {
+        setLoading(false);
+        setReload(!reload);
+        if (res.data == "You have already placed a request on this post") {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "You have already placed a request on this post",
+          });
+        }
+        if (res.data.insertedId) {
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Request Added Successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error("An error occurred:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "An error occurred while adding the Request. Please try again later.",
+        });
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
