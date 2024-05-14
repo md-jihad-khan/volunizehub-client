@@ -88,7 +88,6 @@ const BeaVolunteerPage = () => {
   };
 
   useEffect(() => {
-    console.log("hello");
     setLoading(true);
     axiosSecure
       .get(`/post/${params.id}?email=${user?.email}`)
@@ -153,7 +152,7 @@ const BeaVolunteerPage = () => {
                 Description: {post.description}
               </p>
             </div>
-            <div className="flex flex-col py-6 space-y-6 md:py-0 md:px-6">
+            <div className="flex flex-col py-6 space-y-4 md:py-0 md:px-6">
               <div>
                 <p className=" text-md ">
                   Category:{" "}
@@ -206,7 +205,21 @@ const BeaVolunteerPage = () => {
                   rows="5"
                   className="p-2 w-full rounded lg outline-none"
                 ></textarea>
+                <div className="">
+                  <span className="label-text text-pink-500 font-semibold text-xl">
+                    Status
+                  </span>
+
+                  <select
+                    className="input w-full text-gray-400"
+                    name="category"
+                    required
+                  >
+                    <option>requested</option>
+                  </select>
+                </div>
               </div>
+
               <button
                 onClick={handleRequest}
                 type="button"
