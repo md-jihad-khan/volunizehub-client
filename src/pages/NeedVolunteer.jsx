@@ -16,6 +16,10 @@ const NeedVolunteer = () => {
   const [count, setCount] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [category, setCategory] = useState("");
+  const [minVolunteers, setMinVolunteers] = useState("");
+  const [maxVolunteers, setMaxVolunteers] = useState("");
 
   const axiosSecure = useAxiosSecure();
 
@@ -24,18 +28,35 @@ const NeedVolunteer = () => {
     e.preventDefault();
     setSearch(e.target.search.value);
   };
+
   useEffect(() => {
     setLoading(true);
     setPosts([]);
     axiosSecure
-      .get(
-        `/allPosts?page=${currentPage}&size=${itemsPerPage}&search=${search}`
-      )
+      .get(`/allPosts`, {
+        params: {
+          page: currentPage,
+          size: itemsPerPage,
+          search,
+          sortOrder,
+          category,
+          minVolunteers,
+          maxVolunteers,
+        },
+      })
       .then((res) => {
         setPosts(res.data);
         setLoading(false);
       });
-  }, [currentPage, itemsPerPage, search]);
+  }, [
+    currentPage,
+    itemsPerPage,
+    search,
+    sortOrder,
+    category,
+    minVolunteers,
+    maxVolunteers,
+  ]);
 
   useEffect(() => {
     setLoading(true);
@@ -48,33 +69,30 @@ const NeedVolunteer = () => {
   const pages = [...Array(numberOfPages).keys()].map((element) => element + 1);
 
   const handlePaginationButton = (value) => {
-    console.log(value);
     setCurrentPage(value);
   };
+
   const handleDate = (date) => {
     const deadlineDate = new Date(date);
-
-    // Options for formatting the date
     const options = { year: "numeric", month: "long", day: "numeric" };
-    // Format the deadline date
-    const formattedDeadline = deadlineDate.toLocaleDateString("en-US", options);
-    return formattedDeadline;
+    return deadlineDate.toLocaleDateString("en-US", options);
   };
+
   return (
     <>
       <Helmet>
         <title>Volunize Hub | Need Volunteer</title>
       </Helmet>
       <div className="container mx-auto relative">
-        <div className="text-center ">
+        <div className="text-center">
           <h1 className="text-2xl md:text-4xl font-bold mb-1">
             <span className="text-pink-500">Need</span> Volunteer Posts
           </h1>
           <div className="inline-flex items-center justify-center w-full">
-            <hr className="w-64  my-4 border-pink-500 border rounded "></hr>
-            <div className="absolute px-4 -translate-x-1/2 bg-base-100 left-1/2 ">
+            <hr className="w-64 my-4 border-pink-500 border rounded"></hr>
+            <div className="absolute px-4 -translate-x-1/2 bg-base-100 left-1/2">
               <svg
-                className="w-2 h-2 text-gray-400 "
+                className="w-2 h-2 text-gray-400"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -87,16 +105,16 @@ const NeedVolunteer = () => {
         </div>
         <div className="flex md:w-1/2 mx-auto items-center gap-2">
           <form onSubmit={handleSearch} className="w-full">
-            <label className=" flex items-center border-r-0 pr-0">
+            <label className="flex items-center border-r-0 pr-0">
               <input
                 type="text"
                 name="search"
-                className="w-full input  focus:outline-none border border-gray-300 rounded-full rounded-r-none"
+                className="w-full input focus:outline-none border border-gray-300 rounded-full rounded-r-none"
                 placeholder="Search"
               />
               <button
                 type="submit"
-                className="btn-square  rounded-r-full px-10 bg-pink-500 text-white"
+                className="btn-square rounded-r-full px-10 bg-pink-500 text-white"
               >
                 <FaSearch />
               </button>
@@ -116,6 +134,43 @@ const NeedVolunteer = () => {
             <GiHamburgerMenu />
           </button>
         </div>
+
+        {/* Sort and Filter Controls */}
+        <div className="grid grid-cols-2 md:grid-cols-4 mx-auto items-center gap-2 mt-4">
+          <select
+            defaultValue="default"
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="w-full input focus:outline-none border border-gray-300 select select-bordered"
+          >
+            <option disabled value={"default"}>
+              Sort by deadline
+            </option>
+            <option value="asc">Upcoming Deadlines</option>
+            <option value="desc">Furthest Deadlines</option>
+          </select>
+          <input
+            type="text"
+            placeholder="Category"
+            className="w-full input focus:outline-none border border-gray-300 "
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          />
+          <input
+            type="number"
+            placeholder="Min Volunteers"
+            className="w-full input focus:outline-none border border-gray-300 "
+            value={minVolunteers}
+            onChange={(e) => setMinVolunteers(e.target.value)}
+          />
+          <input
+            type="number"
+            placeholder="Max Volunteers"
+            className="w-full input focus:outline-none border border-gray-300 "
+            value={maxVolunteers}
+            onChange={(e) => setMaxVolunteers(e.target.value)}
+          />
+        </div>
+
         <div
           className={`${
             loading ? "absolute" : "hidden"
@@ -145,7 +200,6 @@ const NeedVolunteer = () => {
                 <th>Volunteer Need</th>
                 <th>Deadline</th>
                 <th className="hidden md:block">View Details</th>
-                {/* Add more table headers as needed */}
               </tr>
             </thead>
             <tbody>
@@ -154,12 +208,11 @@ const NeedVolunteer = () => {
                   <th>{index + 1}</th>
                   <td className="line-clamp-1 h-7 lg:h-full">{post.title}</td>
                   <td>{post.category}</td>
-
                   <td className="text-left">{post.numberOfVolunteer}</td>
-                  <td className="">
+                  <td>
                     <Link
                       to={`/updatePost/${post._id}`}
-                      className="btn btn-ghost btn-xs px-0 "
+                      className="btn btn-ghost btn-xs px-0"
                     >
                       {handleDate(post.deadline)}
                     </Link>
@@ -177,13 +230,13 @@ const NeedVolunteer = () => {
             </tbody>
           </table>
         </div>
+
         {/* Pagination Section */}
         <div className="flex justify-center mt-12">
-          {/* Previous Button */}
           <button
             disabled={currentPage === 1}
             onClick={() => handlePaginationButton(currentPage - 1)}
-            className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:bg-pink-500  hover:text-white"
+            className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:bg-pink-500 hover:text-white"
           >
             <div className="flex items-center -mx-1">
               <svg
@@ -200,23 +253,20 @@ const NeedVolunteer = () => {
                   d="M7 16l-4-4m0 0l4-4m-4 4h18"
                 />
               </svg>
-
               <span className="mx-1">previous</span>
             </div>
           </button>
-          {/* Numbers */}
           {pages.map((btnNum) => (
             <button
               onClick={() => handlePaginationButton(btnNum)}
               key={btnNum}
               className={`hidden ${
                 currentPage === btnNum ? "bg-pink-500 text-white" : ""
-              } px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline hover:bg-pink-500  hover:text-white`}
+              } px-4 py-2 mx-1 transition-colors duration-300 transform rounded-md sm:inline hover:bg-pink-500 hover:text-white`}
             >
               {btnNum}
             </button>
           ))}
-          {/* Next Button */}
           <button
             disabled={currentPage === numberOfPages}
             onClick={() => handlePaginationButton(currentPage + 1)}
@@ -224,7 +274,6 @@ const NeedVolunteer = () => {
           >
             <div className="flex items-center -mx-1">
               <span className="mx-1">Next</span>
-
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-6 h-6 mx-1 rtl:-scale-x-100"
